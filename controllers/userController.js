@@ -35,7 +35,8 @@ module.exports.signUp = async (req, res) => {
             message: "Registration Succesfully",
             token: token,
             name: returnName,
-            email: returnEmail
+            email: returnEmail,
+            test: req.fields
         })
 
     } catch (err) {
@@ -51,5 +52,27 @@ module.exports.signUp = async (req, res) => {
 
 
 
+
+}
+
+module.exports.signIn = async (req, res) => {
+    const { email, password } = req.body;
+    let user = await User.findOne({ email: email })
+    if (!user) {
+        res.status(500).send("Invalid Email or Password")
+    } else {
+        let validUser = await bcrypt.compare(password, user.password)
+        if (!validUser) {
+            res.status(400).send("Invalid Email or Password(password)")
+        } else {
+            const token = user.generateJwt()
+            res.status(200).send({
+                message: "Login Succesfull",
+                token: token,
+                name: user.name,
+                email: user.email
+            })
+        }
+    }
 
 }

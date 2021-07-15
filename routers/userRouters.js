@@ -2,11 +2,12 @@
 const router = require('express').Router()
 const path = require('path')
 // External Import
-const { signUp } = require('../controllers/userController')
+const { signUp, signIn } = require('../controllers/userController')
 
 router.route('/signup')
 
     .post(signUp)
-
+router.route('/signin')
+    .post(signIn)
 module.exports = router
 
