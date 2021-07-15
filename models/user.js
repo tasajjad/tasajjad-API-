@@ -24,18 +24,25 @@ const mySchema = new Schema({
         type: String,
         required: true
     },
+    nickName: {
+        type: String,
+        required: true
+    },
     secret: {
         type: String,
         required: true
     }
 }, { timestamps: true })
 
-mySchema.methods.generateJwt = () => {
+// ()=>{} and function() there have lots of different arrow function create cant find this.This is Bug
+
+mySchema.methods.generateJwt = function () {
     const token = jwt.sign({
         _id: this._id,
         name: this.name,
         email: this.email,
         anniversaryDate: this.anniversaryDate,
+        nickName: this.nickName,
         secret: this.secret
     }, process.env.JWT_SECRET, { expiresIn: 60 * 60 })
 
@@ -48,6 +55,7 @@ module.exports.validateUser = (user) => {
         email: Joi.string().required().email(),
         password: Joi.string().min(6).max(255),
         anniversaryDate: Joi.string().required(),
+        nickName: Joi.string().required().min(4).max(8),
         secret: Joi.string().required().min(6)
     })
 

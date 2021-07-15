@@ -5,7 +5,7 @@ const { User, validateUser } = require('../models/user')
 
 module.exports.signUp = async (req, res) => {
     // console.log(req.body)
-    const { name, email, password, anniversaryDate, secret } = req.body;
+    const { name, email, password, anniversaryDate, nickName, secret } = req.body;
     const functionParameter = req.body;
 
     const { error } = validateUser(functionParameter)
@@ -23,21 +23,27 @@ module.exports.signUp = async (req, res) => {
 
     try {
 
-        // const hashingPassword = await bcrypt.hash(password, salt)
-        let user = new User({ name, email, password, anniversaryDate, secret })
-        let salt = await bcrypt.genSalt(10)
-        user.password = await bcrypt.hash(password, salt)
+        if (anniversaryDate === "11 June" && nickName === "jannat") {
+            // const hashingPassword = await bcrypt.hash(password, salt)
+            let user = new User({ name, email, password, anniversaryDate, nickName, secret })
+            let salt = await bcrypt.genSalt(10)
+            user.password = await bcrypt.hash(password, salt)
 
-        let returnData = await user.save()
-        let { name: returnName, email: returnEmail, anniversaryDate: returnanniversaryDate } = returnData;
-        let token = user.generateJwt()
-        res.status(200).send({
-            message: "Registration Succesfully",
-            token: token,
-            name: returnName,
-            email: returnEmail,
-            anniversaryDate: returnanniversaryDate
-        })
+            let returnData = await user.save()
+            let { name: returnName, email: returnEmail, anniversaryDate: returnanniversaryDate, nickName: returnNickName, secret: returnSecret } = returnData;
+            let token = user.generateJwt()
+            res.status(200).send({
+                message: "Registration Succesfully",
+                token: token,
+                name: returnName,
+                email: returnEmail,
+                anniversaryDate: returnanniversaryDate,
+                nickName: returnNickName,
+                secret: returnSecret
+            })
+        } else {
+            res.status(500).send(" Question answere Does Not Match !")
+        }
 
     } catch (err) {
         res.status(500).send(err.message)
@@ -59,13 +65,14 @@ module.exports.signIn = async (req, res) => {
     const { email, password, secret } = req.body;
 
     let user = await User.findOne({ email })
+
     if (!user) {
         res.status(500).send("Invalid Email or Password")
     } else {
         let validUser = await bcrypt.compare(password, user.password)
 
         if (validUser && secret == user.secret) {
-
+            console.log(user.generateJwt)
             const token = user.generateJwt()
             res.status(200).send({
                 message: "Login Succesfull",
