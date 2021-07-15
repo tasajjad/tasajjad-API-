@@ -20,6 +20,10 @@ const mySchema = new Schema({
         maxLength: 1024
 
     },
+    anniversaryDate: {
+        type: String,
+        required: true
+    },
     secret: {
         type: String,
         required: true
@@ -31,6 +35,7 @@ mySchema.methods.generateJwt = () => {
         _id: this._id,
         name: this.name,
         email: this.email,
+        anniversaryDate: this.anniversaryDate,
         secret: this.secret
     }, process.env.JWT_SECRET, { expiresIn: 60 * 60 })
 
@@ -42,6 +47,7 @@ module.exports.validateUser = (user) => {
         name: Joi.string().required().min(4).max(50),
         email: Joi.string().required().email(),
         password: Joi.string().min(6).max(255),
+        anniversaryDate: Joi.string().required(),
         secret: Joi.string().required().min(6)
     })
 

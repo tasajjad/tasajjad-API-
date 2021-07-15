@@ -5,7 +5,7 @@ const { User, validateUser } = require('../models/user')
 
 module.exports.signUp = async (req, res) => {
     // console.log(req.body)
-    const { name, email, password, secret } = req.body;
+    const { name, email, password, anniversaryDate, secret } = req.body;
     const functionParameter = req.body;
 
     const { error } = validateUser(functionParameter)
@@ -24,19 +24,19 @@ module.exports.signUp = async (req, res) => {
     try {
 
         // const hashingPassword = await bcrypt.hash(password, salt)
-        let user = new User({ name: name, email: email, password: password, secret: secret })
+        let user = new User({ name, email, password, anniversaryDate, secret })
         let salt = await bcrypt.genSalt(10)
         user.password = await bcrypt.hash(password, salt)
 
         let returnData = await user.save()
-        let { name: returnName, email: returnEmail } = returnData;
+        let { name: returnName, email: returnEmail, anniversaryDate: returnanniversaryDate } = returnData;
         let token = user.generateJwt()
         res.status(200).send({
             message: "Registration Succesfully",
             token: token,
             name: returnName,
             email: returnEmail,
-            test: req.fields
+            anniversaryDate: returnanniversaryDate
         })
 
     } catch (err) {
@@ -56,22 +56,28 @@ module.exports.signUp = async (req, res) => {
 }
 
 module.exports.signIn = async (req, res) => {
-    const { email, password } = req.body;
-    let user = await User.findOne({ email: email })
+    const { email, password, secret } = req.body;
+
+    let user = await User.findOne({ email })
     if (!user) {
         res.status(500).send("Invalid Email or Password")
     } else {
         let validUser = await bcrypt.compare(password, user.password)
-        if (!validUser) {
-            res.status(400).send("Invalid Email or Password(password)")
-        } else {
+
+        if (validUser && secret == user.secret) {
+
             const token = user.generateJwt()
             res.status(200).send({
                 message: "Login Succesfull",
                 token: token,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                secret: user.secret
             })
+
+
+        } else {
+            res.status(400).send("Invalid Email or Password(password)")
         }
     }
 
