@@ -38,12 +38,14 @@ mySchema.methods.generateJwt = () => {
 }
 
 module.exports.validateUser = (user) => {
-    const schema = Joi.Object({
+    const schema = Joi.object({
         name: Joi.string().required().min(4).max(50),
         email: Joi.string().required().email(),
         password: Joi.string().min(6).max(255),
         secret: Joi.string().required().min(6)
     })
+
+    return schema.validate(user)
 
 }
 
