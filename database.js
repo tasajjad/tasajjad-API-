@@ -6,7 +6,8 @@ module.exports = function () {
     return mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useCreateIndex: true
+        useCreateIndex: true,
+        useFindAndModify: false
     })
 
 

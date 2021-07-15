@@ -22,8 +22,11 @@ module.exports.signUp = async (req, res) => {
 
 
     try {
-
-        if (anniversaryDate === "11 June" && nickName === "jannat") {
+        // For sensitive case remove and unexpected behaviour block
+        const finalNickName = nickName.replace(/\s/g, '').toLocaleLowerCase();
+        const finalDate = anniversaryDate.replace(/\s/g, '').toLocaleLowerCase();
+        console.log(finalNickName + " " + finalDate)
+        if (finalDate === "11june" && finalNickName === "jannat") {
             // const hashingPassword = await bcrypt.hash(password, salt)
             let user = new User({ name, email, password, anniversaryDate, nickName, secret })
             let salt = await bcrypt.genSalt(10)
@@ -52,19 +55,15 @@ module.exports.signUp = async (req, res) => {
 
     }
 
-
-
-
-
-
-
-
 }
 
 module.exports.signIn = async (req, res) => {
+
+
     const { email, password, secret } = req.body;
 
     let user = await User.findOne({ email })
+
 
     if (!user) {
         res.status(500).send("Invalid Email or Password")
@@ -72,7 +71,7 @@ module.exports.signIn = async (req, res) => {
         let validUser = await bcrypt.compare(password, user.password)
 
         if (validUser && secret == user.secret) {
-            console.log(user.generateJwt)
+
             const token = user.generateJwt()
             res.status(200).send({
                 message: "Login Succesfull",
