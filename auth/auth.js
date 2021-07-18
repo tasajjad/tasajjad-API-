@@ -6,8 +6,10 @@ module.exports = async function auth(req, res, next) {
 
     if (data) {
         try {
+            // Verify the Token
             const token = data.split(" ")[1];
             const decode = await jwt.verify(token, process.env.JWT_SECRET)
+            // It`s Do Not Needed it use for admin check or other`s Purpose
             req.jannat = decode
             next()
         } catch (err) {

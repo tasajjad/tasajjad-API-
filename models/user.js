@@ -44,7 +44,7 @@ mySchema.methods.generateJwt = function () {
         anniversaryDate: this.anniversaryDate,
         nickName: this.nickName,
         secret: this.secret
-    }, process.env.JWT_SECRET, { expiresIn: 60 * 60 })
+    }, process.env.JWT_SECRET, { expiresIn: "1d" })
 
     return token;
 }
