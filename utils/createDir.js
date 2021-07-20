@@ -3,6 +3,11 @@ const { Error } = require('mongoose');
 const path = require('path')
 
 
+/**
+ * 
+ * @param {folderpath} folderpath where is create directory
+ * @resolove for data resolve
+ */
 function createDir(folderpath) {
     const myPath = folderpath;
     return new Promise((resolve, reject) => {

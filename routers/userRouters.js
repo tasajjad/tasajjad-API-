@@ -6,12 +6,14 @@ const { signUp, signIn } = require('../controllers/userController')
 const { secret } = require('../controllers/secret')
 const auth = require('../auth/auth')
 const { createQuotes, getQuotes } = require('../controllers/quotes')
-const { createMemories } = require('../controllers/memories')
+const { createMemories, addImages, getImages } = require('../controllers/memories')
 const upload = require('../middleware/memories')
+const update = require('../middleware/addImages')
+const { createEvent, getEvent } = require('../controllers/events')
 
-
-
-
+/**
+ * @auth all route should be a authentication middleware
+ */
 
 
 router.route('/signup')
@@ -29,5 +31,16 @@ router.route('/memories')
         { name: "year" },
         { name: "month" },
     ]), createMemories)
+router.route('/memories')
+    .get(getImages)
+router.route('/memories/update')
+    .put(update.fields([
+        { name: "photos" },
+        { name: "year" }
+    ]), addImages)
+router.route('/events')
+    .post(createEvent)
+    .get(getEvent)
 module.exports = router
+
 

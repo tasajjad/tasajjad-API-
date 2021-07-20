@@ -4,7 +4,7 @@ const path = require('path')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '/media/tasajjad/Others/tasajjad_app/backend/upload/images')
+        cb(null, '/media/tasajjad/Others/Works/tasajjad_app/backend/upload/images')
     },
 
     filename: function (req, file, cb) {
