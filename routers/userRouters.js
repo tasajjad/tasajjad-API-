@@ -32,15 +32,15 @@ router.route('/memories')
         { name: "month" },
     ]), createMemories)
 router.route('/memories')
-    .get(getImages)
+    .get(auth, getImages)
 router.route('/memories/update')
-    .put(update.fields([
+    .put(auth, update.fields([
         { name: "photos" },
         { name: "year" }
     ]), addImages)
 router.route('/events')
-    .post(createEvent)
-    .get(getEvent)
+    .post(auth, createEvent)
+    .get(auth, getEvent)
 module.exports = router
 
 

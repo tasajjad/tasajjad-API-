@@ -49,20 +49,20 @@ module.exports.getEvent = async function (req, res) {
             try {
                 const yearSearch = await Event.find({ year: { $in: [qyear] } })
                 if (!yearSearch.length) {
-                    res.status(500).send("Database Error")
+                    res.status(404).send("No year found !")
                 }
                 res.status(200).send(yearSearch)
             } catch (err) {
                 res.status(500).send("Database Error")
                 console.log(err)
             }
-            console.log("Year ")
+            // console.log("Year ")
         }
         if (qmonth) {
             try {
                 const monthSearch = await Event.find({ month: { $in: [qmonth] } })
                 if (!monthSearch.length) {
-                    res.status(404).send("No Data Not Found")
+                    res.status(404).send("No Month found !")
                 } else {
                     res.status(200).send(monthSearch)
                 }
@@ -72,7 +72,7 @@ module.exports.getEvent = async function (req, res) {
                 res.status(500).send("Database Error")
 
             }
-            console.log("Month")
+            // console.log("Month")
         }
 
     } else if (qyear && qmonth) {
@@ -80,7 +80,7 @@ module.exports.getEvent = async function (req, res) {
             const events = await Event.find({ $and: [{ year: qyear }, { month: qmonth }] })
             console.log("Length :", events.length)
             if (!events.length) {
-                res.status(404).send("No Data Not Found")
+                res.status(404).send("No month and year found")
             } else {
                 res.status(200).send(events)
             }
@@ -88,7 +88,7 @@ module.exports.getEvent = async function (req, res) {
             res.status(500).send("Database error")
         }
 
-        console.log("ALL")
+        // console.log("ALL")
     } else {
         res.status(404).send("Not Found")
     }
