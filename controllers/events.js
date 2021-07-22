@@ -93,3 +93,23 @@ module.exports.getEvent = async function (req, res) {
         res.status(404).send("Not Found")
     }
 }
+
+/**
+ * @deleteEvents
+ */
+
+module.exports.deleteEvent = async function (req, res) {
+    const { id } = req.params
+    const isEvent = await Event.findByIdAndDelete({ _id: id })
+    if (!isEvent) {
+        res.status(404).send("Event Not Found")
+    } else {
+        res.status(200).send({
+            message: "Event Delete Succesfull",
+            deletedEvent: isEvent
+        })
+    }
+
+
+}
+

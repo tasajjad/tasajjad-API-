@@ -9,7 +9,8 @@ const { createQuotes, getQuotes } = require('../controllers/quotes')
 const { createMemories, addImages, getImages } = require('../controllers/memories')
 const upload = require('../middleware/memories')
 const update = require('../middleware/addImages')
-const { createEvent, getEvent } = require('../controllers/events')
+const { createEvent, getEvent, deleteEvent } = require('../controllers/events')
+const passwordChange = require('../auth/passwordChange')
 
 /**
  * @auth all route should be a authentication middleware
@@ -41,6 +42,11 @@ router.route('/memories/update')
 router.route('/events')
     .post(auth, createEvent)
     .get(auth, getEvent)
+router.route('/events/:id')
+    .delete(deleteEvent)
+
+router.route("/auth/change-pass/:id")
+    .post(auth, passwordChange)
 module.exports = router
 
 

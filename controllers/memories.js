@@ -282,7 +282,3 @@ async function getUpdateMemories(year = false, month = false) {
 
 }
 
-
-
-
-
