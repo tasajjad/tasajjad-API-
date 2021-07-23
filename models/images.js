@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose')
 
 const imagesSchema = new Schema({
     imagesPath: {
-        type: String,
+        type: Array,
         required: true,
     },
     year: {
