@@ -1,5 +1,5 @@
 {
-  "name": "tasajjad_backend",
+  "name": "tasajjad-API-",
   "version": "1.0.0",
   "description": "This is personal project .",
   "main": "server.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https//:www.tasajjad/tasajjad_backend"
+    "url": "https://github.com/tasajjad/tasajjad-API-"
   },
   "keywords": [
     "tasajjad"
