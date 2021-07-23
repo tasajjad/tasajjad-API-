@@ -8,7 +8,7 @@ const auth = require('../auth/auth')
 const { createQuotes, getQuotes } = require('../controllers/quotes')
 // const { createMemories, addImages, getImages } = require('../controllers/@depricatedmemories')
 const { createYear, createMonth, uploadImages } = require('../controllers/memories')
-const upload = require('../middleware/memories')
+const upload = require('../middleware/images')
 const update = require('../middleware/addImages')
 const { createEvent, getEvent, deleteEvent } = require('../controllers/events')
 const passwordChange = require('../auth/passwordChange')
@@ -35,6 +35,13 @@ router.route('/memories/create-year')
     .post(createYear)
 router.route('/memories/create-month')
     .post(createMonth)
+
+router.route('/memories/upload-images')
+    .post(upload.fields({
+        fieldName: "photos",
+        fieldName: "year",
+        fieldName: "month"
+    }), uploadImages)
 
 
 /**

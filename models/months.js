@@ -9,6 +9,6 @@ const monthSchema = new Schema({
         type: String,
         required: true
     }
-})
+}, { timestamps: true })
 
 module.exports = Month = model("Month", monthSchema)

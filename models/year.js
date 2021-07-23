@@ -9,6 +9,6 @@ const yearSchema = new Schema({
         type: String,
         required: true
     }
-})
+}, { timestamps: true })
 
 module.exports = Year = model("Year", yearSchema)
