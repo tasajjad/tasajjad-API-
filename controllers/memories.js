@@ -46,6 +46,7 @@ module.exports.createMonth = async function (req, res) {
 
 module.exports.uploadImages = function (req, res) {
 
-    console.log(req.files)
+    console.log("Body: ", req.body)
+    console.log("FILES: ", req.files)
 
 }

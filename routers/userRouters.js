@@ -37,11 +37,11 @@ router.route('/memories/create-month')
     .post(createMonth)
 
 router.route('/memories/upload-images')
-    .post(upload.fields({
-        fieldName: "photos",
-        fieldName: "year",
-        fieldName: "month"
-    }), uploadImages)
+    .post(upload.fields([
+        { fieldName: "photos" },
+        { fieldName: "year" },
+        { fieldName: "month" }
+    ]), uploadImages)
 
 
 /**
