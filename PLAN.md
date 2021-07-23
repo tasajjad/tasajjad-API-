@@ -5,14 +5,9 @@
 5.Add Video Option
 
                     ********************
-
-                    Create Event song,eye,vhat khaiye deya etc etc
-
-                    date: time: description year, month
-                    1.send events date time and description in mail
-
                     AUTH releted
 
-                    1.Oauth
-                    2.Password changing optio
-                    3.forgotten password (OTP implementation)
+                   1.oAuth
+                   2.OTP
+                   3.Events reminder by using mail
+                    
