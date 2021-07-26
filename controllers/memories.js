@@ -1,7 +1,8 @@
 
 const Year = require('../models/year')
 const Month = require('../models/months')
-const Images = require('../models/images')
+const Images = require('../models/images');
+const { func } = require('joi');
 
 module.exports.createYear = async function (req, res) {
     const { year, description } = req.body;
@@ -99,3 +100,69 @@ module.exports.getAllMemories = async function (req, res) {
     }
 
 }
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @queryString year,month > year>month
+ * @accept a year _id and month _id for query perfectly ! 
+ * @link http://localhost:3001/api/user/memories/individual/?year=60fa4334c3a93f1b3b0f4238
+ */
+
+
+
+
+module.exports.getImagesIndivisual = async function (req, res) {
+
+    const { year: qyear, month: qmonth } = req.query
+
+
+    if (qyear && qmonth) {
+
+        const returnData = await Images.find({ $and: [{ year: qyear }, { month: qmonth }] })
+            .populate(['year', 'month'])
+        if (returnData) {
+            res.status(200).send(returnData)
+        } else {
+            res.status(500).send("Nothing Failed !")
+        }
+
+
+    } else if (qyear || qmonth) {
+        if (qyear) {
+            const returnYear = await Images.find({ year: { $in: [qyear] } }).populate(['year', 'month'])
+            if (returnYear) {
+                res.status(200).send(returnYear)
+            } else {
+                res.status(500).send("Something went wrong !")
+            }
+        } else if (qmonth) {
+            const returnMonth = await Images.find({ month: { $in: [qmonth] } }).populate(['year', 'month'])
+            if (returnMonth) {
+                res.status(200).send(returnMonth)
+            } else {
+                res.status(500).send("Something went wrong !")
+            }
+        }
+
+    } else {
+        res.status(404).send("Not Found !")
+    }
+
+
+
+
+
+}
+
+
+
+
+// try {
+//     const returnData = await Images.find({ year: { $in: [qyear] } })
+//     res.status(200).send(returnData)
+
+// } catch (err) {
+//     console.log(err)
+// }
