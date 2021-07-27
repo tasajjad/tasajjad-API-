@@ -37,3 +37,19 @@ module.exports.getQuotes = async (req, res) => {
     }
 
 };
+
+module.exports.deleteQuotesById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedQuotes = await Quote.findByIdAndDelete({ _id: id })
+        if (deletedQuotes) {
+            res.status(200).send({
+                message: "Quotes deleted Succesfully",
+                data: deletedQuotes
+            })
+        }
+
+    } catch (err) {
+        res.status(500).status("Something Went Wrong !")
+    }
+}

@@ -5,9 +5,20 @@ const path = require('path')
 const { signUp, signIn } = require('../controllers/userController')
 const { secret } = require('../controllers/secret')
 const auth = require('../auth/auth')
-const { createQuotes, getQuotes } = require('../controllers/quotes')
+const { createQuotes, getQuotes, deleteQuotesById } = require('../controllers/quotes')
 // const { createMemories, addImages, getImages } = require('../controllers/@depricatedmemories')
-const { createYear, createMonth, uploadImages, getAllMemories, getImagesIndivisual } = require('../controllers/memories')
+const {
+    createYear,
+    createMonth,
+    uploadImages,
+    getAllMemories,
+    getImagesIndivisual,
+    getMonth,
+    getYear,
+    deleteYearById,
+    deleteMonthById,
+
+} = require('../controllers/memories')
 const upload = require('../middleware/images')
 const update = require('../middleware/addImages')
 const { createEvent, getEvent, deleteEvent } = require('../controllers/events')
@@ -27,14 +38,22 @@ router.route('/create-secret')
 router.route('/quotes')
     .post(auth, createQuotes)
     .get(getQuotes)
+router.route('/quotes/:id')
+    .delete(deleteQuotesById)
 /**
  * @working
  */
 
-router.route('/memories/create-year')
+router.route('/memories/year')
     .post(createYear)
-router.route('/memories/create-month')
+    .get(getYear)
+router.route('/memories/year/:id')
+    .delete(deleteYearById)
+router.route('/memories/month')
     .post(createMonth)
+    .get(getMonth)
+router.route('/memories/month/:id')
+    .delete(deleteMonthById)
 
 router.route('/memories/upload-images')
     .post(upload.fields([

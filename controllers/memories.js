@@ -157,12 +157,64 @@ module.exports.getImagesIndivisual = async function (req, res) {
 }
 
 
+/**
+ * @GET year
+ */
 
+module.exports.getYear = async function (req, res) {
+    try {
+        const year = await Year.find().select()
+        if (year) {
+            res.status(200).send(year)
+        }
+    } catch (err) {
+        res.status(500).send("Something went wrong !")
+    }
+}
 
-// try {
-//     const returnData = await Images.find({ year: { $in: [qyear] } })
-//     res.status(200).send(returnData)
+/**
+ * @GET month
+ */
 
-// } catch (err) {
-//     console.log(err)
-// }
+module.exports.getMonth = async function (req, res) {
+    try {
+        const month = await Month.find()
+        if (month) {
+            res.status(200).send(month)
+        }
+    } catch (err) {
+        res.status(500).send("Something wrong !")
+    }
+}
+
+module.exports.deleteYearById = async function (req, res) {
+    const { id } = req.params;
+    try {
+        const deletedYear = await Year.findByIdAndDelete({ _id: id })
+        if (deletedYear) {
+            res.status(200).send({
+                message: "Deleted Succesfull",
+                data: deletedYear
+            })
+        }
+    } catch (err) {
+        res.status(500).send("Something went wrong !")
+        console.log(err.message)
+    }
+}
+
+module.exports.deleteMonthById = async function (req, res) {
+    const { id } = req.params;
+    try {
+        const deletedMonth = await Month.findByIdAndDelete({ _id: id })
+        if (deletedMonth) {
+            res.status(200).send({
+                message: "Deleted month Succesfull",
+                data: deletedMonth
+            })
+        }
+
+    } catch (err) {
+        res.status(500).send("Something went wrong !")
+    }
+}
