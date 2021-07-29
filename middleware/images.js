@@ -1,9 +1,11 @@
 const multer = require('multer')
 const path = require('path')
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        cb(null, path.join(`${__dirname}/../upload/images`))
 
-        cb(null, '/media/tasajjad/Others/Works/tasajjad_app/backend/upload/images')
+
     },
     filename: function (req, file, cb) {
         const extention = path.extname(file.originalname)

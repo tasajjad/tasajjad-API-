@@ -80,7 +80,7 @@ module.exports.uploadImages = async function (req, res) {
 
     } catch (err) {
         res.status(500).send("Some Database Problem !")
-        console.log(err)
+        console.log("[ERROR:]:", err)
     }
 }
 
@@ -96,7 +96,6 @@ module.exports.getAllMemories = async function (req, res) {
         }
     } catch (err) {
         res.status(500).send("Some Database Problem !")
-        // console.log(err)
     }
 
 }
