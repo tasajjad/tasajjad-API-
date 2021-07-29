@@ -9,7 +9,7 @@ const { createQuotes, getQuotes, deleteQuotesById } = require('../controllers/qu
 const { createGift, getGift } = require('../controllers/giftControllers')
 const giftUpload = require('../middleware/giftMiddleware')
 const { createLike, getAllLikes, deleteLikeById } = require('../controllers/likeController')
-
+const { createDescription, getDescription, deleteDescription } = require('../controllers/golam')
 const { createDate, getAllDate, deleteDateById } = require('../controllers/dateController')
 const {
     createYear,
@@ -108,6 +108,17 @@ router.route('/date')
 
 router.route('/date/:id')
     .delete(deleteDateById)
+/**
+ * @golam
+ */
+
+
+router.route('/golam')
+    .post(createDescription)
+    .get(getDescription)
+router.route('/golam/:id')
+    .delete(deleteDescription)
+
 
 
 /**
