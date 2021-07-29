@@ -1,5 +1,6 @@
 /node_modules
 /upload
+/gift
 .env
 plan.txt
 .vscode

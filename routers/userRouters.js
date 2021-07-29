@@ -6,7 +6,8 @@ const { signUp, signIn } = require('../controllers/userController')
 const { secret } = require('../controllers/secret')
 const auth = require('../auth/auth')
 const { createQuotes, getQuotes, deleteQuotesById } = require('../controllers/quotes')
-// const { createMemories, addImages, getImages } = require('../controllers/@depricatedmemories')
+const { createGift, getGift } = require('../controllers/giftControllers')
+const giftUpload = require('../middleware/giftMiddleware')
 const {
     createYear,
     createMonth,
@@ -67,6 +68,22 @@ router.route('/memories/')
 
 router.route('/memories/individual')
     .get(getImagesIndivisual)
+
+/**
+ * @gift
+ */
+
+router.route('/gift')
+    .post(giftUpload.fields([
+        { name: "photos" },
+        { name: "date" },
+        { name: "month" },
+        { name: "day" }
+    ]), createGift)
+    .get(getGift)
+
+
+
 /**
  * @Okay
  */
