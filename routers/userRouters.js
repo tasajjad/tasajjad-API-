@@ -8,6 +8,7 @@ const auth = require('../auth/auth')
 const { createQuotes, getQuotes, deleteQuotesById } = require('../controllers/quotes')
 const { createGift, getGift } = require('../controllers/giftControllers')
 const giftUpload = require('../middleware/giftMiddleware')
+const { createLike, getAllLikes, deleteLikeById } = require('../controllers/likeController')
 const {
     createYear,
     createMonth,
@@ -82,7 +83,16 @@ router.route('/gift')
     ]), createGift)
     .get(getGift)
 
+/**
+ * @Like
+ */
 
+router.route('/like')
+    .post(createLike)
+    .get(getAllLikes)
+
+router.route('/like/:id')
+    .delete(deleteLikeById)
 
 /**
  * @Okay
